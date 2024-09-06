@@ -1,96 +1,121 @@
-# Import libraries (wordcloud will need to be installed)
 from wordcloud import WordCloud, STOPWORDS
 import string
 import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
+def make_wordcloud(text_input, filename="wordcloud.png"):
+    stopwords = set(STOPWORDS)
+    tokens = text_input.split()
+    punctuation_mapping_table = str.maketrans('', '', string.punctuation)
+    tokens_stripped_of_punctuation = [token.translate(punctuation_mapping_table)
+                                  for token in tokens]
+    lower_tokens = [token.lower() for token in tokens_stripped_of_punctuation]
+
+    joined_string = (" ").join(lower_tokens)
+
+    wordcloud = WordCloud(width=1800,
+                      height=1800,
+                      stopwords=stopwords,
+                      min_font_size=20).generate(joined_string)
+
+    plt.figure(figsize=(30,40))
+    # Turn off axes
+    plt.axis("off")
+    # Display (essential to actually get the wordcloud in the image)
+    plt.imshow(wordcloud)
+    # Save the wordcloud to a file
+    plt.savefig(filename)
+
+
+###################################################
+# EXAMPLE USE: With string, which will be the output
+# of st.text_input() or st.text_area()
+###################################################
+
+penguin_text = """
+Penguins are a group of aquatic flightless birds from the family Spheniscidae
+of the order Sphenisciformes.
+They live almost exclusively in the Southern Hemisphere: only one species,
+the Galapagos penguin, is found north of the Equator. Highly adapted for life in the ocean water,
+penguins have countershaded dark and white plumage and flippers for swimming. Most penguins feed
+on krill, fish, squid and other forms of sea life which they catch with their bills and swallow
+whole while swimming. A penguin has a spiny tongue and powerful jaws to grip slippery prey.
+
+They spend about half of their lives on land and the other half in the sea.
+The largest living species is the emperor penguin (Aptenodytes forsteri):
+on average, adults are about 1.1 m (3 ft 7 in) tall and weigh 35 kg (77 lb).
+The smallest penguin species is the little blue penguin (Eudyptula minor),
+also known as the fairy penguin, which stands around 30–33 cm (12–13 in) tall and
+weighs 1.2–1.3 kg (2.6–2.9 lb).
+Today, larger penguins generally inhabit colder regions, and smaller penguins inhabit regions
+with temperate or tropical climates. Some prehistoric penguin species were enormous:
+as tall or heavy as an adult human.There was a great diversity of species in subantarctic regions,
+and at least one giant species in a region around 2,000 km south of the equator 35 mya, during
+the Late Eocene, a climate decidedly warmer than today.
+"""
+
+make_wordcloud(penguin_text, "penguin_sample_wordcloud.png")
+
+
+###################################################
+# EXAMPLE USE: With .txt file
+###################################################
 
 # Read text in for which we want to generate word cloud
 # The read() method of the file object simply reads in the contents of the file
 # as one, single continuous string of text.
 with open("bttf_reviews.txt", "r") as f:
-    full_text = f.read()
+    bttf_text = f.read()
 
-# STOPWORDS has a list of common stopwords (words such as "the", "and",
-# "because", "isn't" etc that we're probably not interested in here).  We'll
-# take a copy of STOPWORDS (which we'll call stopwords) in case we want to
-# add our own etc.  We won't here, but we need them to remain as a set.
-# Note - we're just setting up the set of stopwords here, we're not removing
-# them from our text yet.  If we want to look at the stopwords, just type
-# stopwords in the console after we've run this line of code.
-stopwords = set(STOPWORDS)
+make_wordcloud(bttf_text, "bttf_sample_wordcloud.png")
 
-# Tokenize the text (split into individual words (with punctuation attached) and
-# put them in a list - we can see this if we look at the tokens list after we
-# run this)
-tokens = full_text.split()
 
-# Set up a translation table that maps punctuation characters (stored in
-# string.punctuation) to 'None'.  (We can see the list of punctuation characters
-# stored in string if we type string.punctuation in the console).  This allows
-# us to get rid of punctuation characters (which you'll have seen were still in
-# the tokens).  The maketrans() method of a string object takes up to three
-# inputs (arguments).  If we supply three, then the characters passed in the
-# third argument are mapped to 'None' - ie it gets rid of them.  So we pass
-# three inputs here - the first two we just pass empty strings (so it doesn't do
-# any translation with them), and then we pass string.punctuation (which
-# contains a list of punctuation characters) as the third input.  It will then
-# set up a translation table that we can use to remove punctuation from text.
-punctuation_mapping_table = str.maketrans('', '', string.punctuation)
-
-# The translate() function maps one set of characters to another.  Here, we
-# use that to translate tokens with punctuation to ones without punctuation
-# by using the mapping table we specified above.  We use a list comprehension
-# here to give us a list of tokens that have had the translation applied from
-# the list of tokens that haven't.  After we run this bit of code, we can look
-# at the tokens_stripped_of_punctuation.
-tokens_stripped_of_punctuation = [token.translate(punctuation_mapping_table)
+def make_wordcloud_with_image_mask(text_input, filename="wordcloud.png",
+                                   mask_image=None, **kwargs):
+    stopwords = set(STOPWORDS)
+    tokens = text_input.split()
+    punctuation_mapping_table = str.maketrans('', '', string.punctuation)
+    tokens_stripped_of_punctuation = [token.translate(punctuation_mapping_table)
                                   for token in tokens]
+    lower_tokens = [token.lower() for token in tokens_stripped_of_punctuation]
 
-# Convert all tokens to lowercase (so we don't count capitalised words
-# differently).  We can use the lower() method of a string object (each token is
-# a string) to make the string lowercase.  Again we use a list comprehension
-# here.  We can then look at lower_tokens to see all our tokens are now lower
-# case.
-lower_tokens = [token.lower() for token in tokens_stripped_of_punctuation]
+    joined_string = (" ").join(lower_tokens)
 
-###NEW
-# Let's remove the words "movie", "film", "back", "future".
-# First, we'll set up a list of the words we want to remove (remember, all our
-# tokens are lower case and have no punctuation, so our words to remove should
-# be the same)
-words_to_remove = ["movie", "film", "back", "future", "one"]
+    plt.figure(figsize=(30,40))
+    plt.axis("off")
 
-# Now let's generate a new list of tokens that have these words removed, by
-# forming it only from tokens that are not in our list of words to remove above
-refined_tokens = [token for token in lower_tokens if token
-                  not in words_to_remove]
+    if mask_image is not None:
+        mask_image_opened = Image.open(mask_image)
+        mask_array = np.array(mask_image_opened)
 
-# Now let's join the refined tokens back up
-joined_string = (" ").join(refined_tokens)
+        wordcloud = WordCloud(width=mask_array.shape[1],
+                    height=mask_array.shape[0],
+                    stopwords=stopwords,
+                    mask=mask_array,
+                    **kwargs).generate(joined_string)
 
-# Generate a wordcloud - specify the size, background colour, and the minimum
-# font size.  We also specify the set of stopwords we want excluded that we
-# set up earlier.  Specify that the word cloud should be generated on our text
-# string by passing that string into the generate method of WordCloud.
-# Note that the minimum font size specified will exclude words that would
-# appear smaller than this (as they are too uncommon).  So reducing minimum
-# font size acts as a proxy filter where more uncommon words are allowed in to
-# the cloud.
-wordcloud = WordCloud(width=1800,
-                      height=1800,
-                      background_color='white',
-                      stopwords=stopwords,
-                      min_font_size=20).generate(joined_string)
+        plt.imshow(wordcloud, interpolation='bilinear')
 
-# Now we plot (and save) the wordcloud using some matplotlib instructions.
+    else:
+        wordcloud = WordCloud(width=1800,
+                    height=1800,
+                    stopwords=stopwords,
+                    **kwargs).generate(joined_string)
 
-# We set the size of the figure
-plt.figure(figsize=(30,40))
+        plt.imshow(wordcloud)
 
-# Turn off axes
-plt.axis("off")
+    plt.savefig(filename)
 
-# Then use imshow to plot an image (here, our wordcloud)
-plt.imshow(wordcloud)
 
-# Then save the image as a png
-plt.savefig("wordcloud.png")
+
+make_wordcloud_with_image_mask(bttf_text, "bttf_sample_wordcloud_blue.png", colormap='Blues')
+
+make_wordcloud_with_image_mask(penguin_text, "penguin_sample_wordcloud_mask.png",
+                               mask_image="penguin.jpg")
+
+make_wordcloud_with_image_mask(bttf_text, "bttf_sample_wordcloud_pink_background_blue_text.png",
+                               colormap='Blues', background_color='pink')
+
+make_wordcloud_with_image_mask(penguin_text, "penguin_sample_wordcloud_mask_smaller_text.png",
+                               mask_image="penguin.jpg", min_font_size=6)

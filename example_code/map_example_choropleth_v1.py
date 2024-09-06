@@ -2,13 +2,15 @@ import streamlit as st
 import folium
 import geopandas
 import pandas as pd
-from streamlit_folium import st_folium
+from streamlit_folium import st_folium # New import
 
 st.set_page_config(layout="wide")
 
 st.title('Simple Map Example')
 
-# Read and process the travel data
+# Read in our dataframe
+# Notice here I'm just loading it from a repository - we could also load it from local storage
+# as long as the same data will be available in the same relative position when we deploy our web app
 car_travel_time_lookup = pd.read_csv("https://github.com/hsma-programme/h6_3c_interactive_plots_travel/raw/main/h6_3c_interactive_plots_travel/example_code/travel_matrix_minutes.zip",
                                      index_col="LSOA")
 
@@ -16,6 +18,11 @@ car_travel_time_lookup['shortest'] = (
     # axis = 1 means row-wise minimum (instead of columnwise)
     car_travel_time_lookup.min(axis=1)
 )
+
+###########################
+# Create the map in Folium
+###########################
+# This is no different to usual!
 
 lsoa_geojson_path = 'https://github.com/hsma-programme/h6_3c_interactive_plots_travel/raw/main/h6_3c_interactive_plots_travel/example_code/LSOA_2011_Boundaries_Super_Generalised_Clipped_BSC_EW_V4.geojson'
 
@@ -44,4 +51,14 @@ choropleth = folium.Choropleth(
 
 choropleth = choropleth.add_to(travel_time_map_interactive)
 
+###################################
+# KEY NEW BIT
+###################################
+# Display the map
+####################################
+# This is the only code we need to add in to display the map in Streamlit!
+# We can pass in use_container_width=True to ensure it uses the maximum available space
 st_folium(travel_time_map_interactive, use_container_width=True)
+
+# Let's display the dataframe too
+st.dataframe(car_travel_time_lookup)
