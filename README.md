@@ -1,6 +1,26 @@
 # HSMA 6 - Session 7B - Introduction to Web Apps
 
+## Learning Objectivs
 
+At the end of this session, students should be able to:
+
+- Explain the basics of how a Streamlit app runs
+- Create a Streamlit app containing
+    - Titles and text
+    - Images
+    - Dataframes
+    - Static or Interactive Charts
+    - Static or Interactive Maps
+    - Metrics
+    - Layout elements (tabs, columns, expanders, callouts)
+    - File uploading
+    - Chart, Map or data file downloading
+- Explain some of the pros and cons of Streamlit versus other Python app frameworks, such as Plotly Dash, Shiny for Python, and Flask
+
+In this session, students will create three web applications:
+- a simple calculator
+- a wordcloud generator
+- a dashboard
 
 ## Dataset Sources
 
