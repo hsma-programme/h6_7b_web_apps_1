@@ -71,8 +71,24 @@ with open("bttf_reviews.txt", "r") as f:
 make_wordcloud(bttf_text, "bttf_sample_wordcloud.png")
 
 
-def make_wordcloud_with_image_mask(text_input, filename="wordcloud.png",
-                                   mask_image=None, **kwargs):
+
+###################################################
+###################################################
+# Advanced wordcloud function
+# This accepts an optional additional image to act
+# as a 'mask'
+# It also allows users to pass in additional
+# parameters that are accepted by the wordcloud
+# function itself
+###################################################
+###################################################
+
+def make_wordcloud_with_image_mask(
+        text_input,
+        filename="wordcloud.png",
+        mask_image=None,
+        **kwargs
+        ):
     stopwords = set(STOPWORDS)
     tokens = text_input.split()
     punctuation_mapping_table = str.maketrans('', '', string.punctuation)
@@ -109,24 +125,24 @@ def make_wordcloud_with_image_mask(text_input, filename="wordcloud.png",
 
 
 
-make_wordcloud_with_image_mask(bttf_text,
-                               "bttf_sample_wordcloud_blue.png",
-                               colormap='Blues'
-                               )
-
 make_wordcloud_with_image_mask(penguin_text,
                                "penguin_sample_wordcloud_mask.png",
                                mask_image="penguin.jpg"
-                               )
-
-make_wordcloud_with_image_mask(bttf_text,
-                               "bttf_sample_wordcloud_pink_background_blue_text.png",
-                               colormap='Blues',
-                               background_color='pink'
                                )
 
 make_wordcloud_with_image_mask(penguin_text,
                                "penguin_sample_wordcloud_mask_smaller_text.png",
                                mask_image="penguin.jpg",
                                min_font_size=6
+                               )
+
+make_wordcloud_with_image_mask(bttf_text,
+                               "bttf_sample_wordcloud_blue.png",
+                               colormap='Blues'
+                               )
+
+make_wordcloud_with_image_mask(bttf_text,
+                               "bttf_sample_wordcloud_pink_background_blue_text.png",
+                               colormap='Blues',
+                               background_color='pink'
                                )
