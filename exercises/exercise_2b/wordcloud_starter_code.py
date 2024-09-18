@@ -109,13 +109,24 @@ def make_wordcloud_with_image_mask(text_input, filename="wordcloud.png",
 
 
 
-make_wordcloud_with_image_mask(bttf_text, "bttf_sample_wordcloud_blue.png", colormap='Blues')
+make_wordcloud_with_image_mask(bttf_text,
+                               "bttf_sample_wordcloud_blue.png",
+                               colormap='Blues'
+                               )
 
-make_wordcloud_with_image_mask(penguin_text, "penguin_sample_wordcloud_mask.png",
-                               mask_image="penguin.jpg")
+make_wordcloud_with_image_mask(penguin_text,
+                               "penguin_sample_wordcloud_mask.png",
+                               mask_image="penguin.jpg"
+                               )
 
-make_wordcloud_with_image_mask(bttf_text, "bttf_sample_wordcloud_pink_background_blue_text.png",
-                               colormap='Blues', background_color='pink')
+make_wordcloud_with_image_mask(bttf_text,
+                               "bttf_sample_wordcloud_pink_background_blue_text.png",
+                               colormap='Blues',
+                               background_color='pink'
+                               )
 
-make_wordcloud_with_image_mask(penguin_text, "penguin_sample_wordcloud_mask_smaller_text.png",
-                               mask_image="penguin.jpg", min_font_size=6)
+make_wordcloud_with_image_mask(penguin_text,
+                               "penguin_sample_wordcloud_mask_smaller_text.png",
+                               mask_image="penguin.jpg",
+                               min_font_size=6
+                               )
