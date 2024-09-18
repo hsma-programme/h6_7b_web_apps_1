@@ -1,5 +1,11 @@
 # HSMA 6 - Session 7B - Introduction to Web Apps
 
+## Instructions if running from github codespaces
+
+If you are using github codespaces, you will need to add some extra arguments when running your app.
+
+`streamlit run my_app.py --server.enableCORS false --server.enableXsrfProtection false`
+
 ## Learning Objectivs
 
 At the end of this session, students should be able to:
