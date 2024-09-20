@@ -1,0 +1,144 @@
+---
+title: "Setup Test"
+format:
+    html:
+        toc: true
+        toc-float: true
+---
+
+# Install the environment
+
+1. Open the Anaconda Prompt
+
+2. Navigate to the folder you've stored the environment folder in using the `cd` (change directory) command.
+
+```
+cd C:\HSMA\h6_7b_web_apps_1\environment
+```
+
+3. Install the environment from the yml file
+
+```
+conda env create -f environment.yml
+```
+
+:::{.callout-tip collapse="true"}
+### Click here if you're having issues with installing the environment via Anaconda
+If you receive an error about exceeding the maximum number of retries or having a SSL error, try editing the environment.yml file to replace 'conda-forge' with 'defaults'.
+
+**Before**
+
+![](assets/2024-09-20-12-50-15.png)
+
+**After**
+
+![](assets/2024-09-20-12-49-49.png)
+
+Save the file and try again.
+
+If the environment has partially installed before reaching this failure point, it may tell you that you cannot install the environment due to the prefix already existing. If this is the case, run the following command:
+
+```
+conda env remove -n hsma_webdev
+```
+
+Then you can rerun the `conda env create -f environment.yml` command.
+:::
+
+# Run a sample streamlit app
+
+## Selecting the hsma_webdev environment
+
+First, we need to make sure we've selected the correct environment.
+
+Click into the python file `test_streamlit_app.py` and select the `hsma_webdev` environment from the dropdown that appears.
+
+![](assets/2024-09-20-12-56-56.png)
+
+![](assets/2024-09-20-12-57-29.png)
+
+![](assets/2024-09-20-12-57-46.png)
+
+:::{.callout-tip}
+Alternatively, to access the interpreter/environment select from any file within VSCode, click CTRL + SHIFT + P and choose 'Python: Select Interpreter' from the dropdown list that appears.
+
+You may need to start typing 'interpreter' to get it to show up.
+
+![](assets/2024-09-20-12-58-39.png)
+
+:::
+
+## Running the app in the terminal
+
+Next, open up a terminal.
+
+![](assets/2024-09-20-13-03-50.png)
+
+:::{.callout-warning}
+If you had a terminal open when you selected the hsma_webdev environment, this terminal may not have updated to be pointing towards this new environment - though in recent versions of VSCode it appears this behaviour may have changed!
+
+Take a look before the start of the filepath - this should indicate the environment you have selected.
+
+![](assets/2024-09-20-13-05-35.png)
+
+
+If this doesn't work
+
+- First try opening an additional terminal with the plus button
+![](assets/2024-09-20-13-06-15.png)
+
+- If this doesn't work and you are using a *powershell* terminal, click on the dropdown arrow next to the plus sign and open a 'command prompt' (cmd) terminal instead.
+
+![](assets/2024-09-20-13-07-12.png)
+
+- If neither of these work, try running
+`conda activate hsma_webdev`
+
+![](assets/2024-09-20-13-07-59.png)
+or
+![](assets/2024-09-20-13-08-17.png)
+:::
+
+In your powershell or cmd terminal, run the command
+
+`streamlit run test_streamlit_app.py`
+
+:::{.callout-note}
+You may receive a popup telling you that you need to allow Python through the firewall. Click 'allow' if you are able to.
+
+If your IT department blocks this, you can either
+- ask them to allow it
+- use the alternative web-based option we will provide for the Streamlit sessions
+:::
+
+If the app runs successfully, you should see a message like the below in the terminal.
+
+![](assets/2024-09-20-13-09-22.png)
+
+A browser window will either open separately or within your VSCode.
+
+If it doesn't open up, navigate to the 'Local URL' shown. CTRL + Click on the link in the terminal should open it up, or you can type in the address in your preferred web browser.
+
+The web app should look like this:
+
+![](assets/2024-09-20-13-11-39.png)
+
+or like this
+
+![](assets/2024-09-20-13-11-56.png)
+
+depending on whether your OS preferences are set to 'dark mode'.
+
+## Closing the app
+
+Closing down VSCode will shut the app down.
+
+Alternatively, while you still have the browser window with the app open, press CTRL + C to close down the app server.
+
+![](assets/2024-09-20-13-12-53.png)
+
+:::{.callout-warning}
+If you try to close the app in this way while the browser window is shut, it will fail to close. However, you can just kill the terminal manually with the rubbish bin icon.
+
+![](assets/2024-09-20-13-13-34.png)
+:::
