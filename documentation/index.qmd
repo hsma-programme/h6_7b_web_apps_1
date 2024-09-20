@@ -1,6 +1,5 @@
 ---
 title: "Setup Test"
-output-dir: docs
 format:
     html:
         toc: true
