@@ -6,6 +6,20 @@ format:
         toc-float: true
 ---
 
+:::{.callout-warning}
+When you first open the repository in VSCode, you may be asked if you want to reopen the folder in a container.
+
+**Ignore this message and close the prompt.**
+
+![](../assets/2024-09-20-13-33-15.png)
+
+The container is just provided for those who will need a web-based backup for running the exercises - more guidance will be given during the HSMA session.
+:::
+
+If you would prefer to watch this guide in video form, please see the video embedded below:
+
+{{< video https://youtu.be/wppav7HhHew >}}
+
 # Install the environment
 
 1. Open the Anaconda Prompt
