@@ -68,4 +68,4 @@ with tab2:
     if remaining > 10:
        st.success("Treat yourself!",icon="💰")
 
-    st.image("student_code\exercise_2a\denise.png")
+    st.image("https://raw.githubusercontent.com/hsma-programme/h6_7b_web_apps_1/refs/heads/main/student_code/exercise_2a/denise.png")
