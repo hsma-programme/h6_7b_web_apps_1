@@ -1,52 +1,71 @@
 import streamlit as st
 
-st.title("Denise Streamlit App")
+st.title("Denise: Streamlit testing")
 
-# Enter name
-name = st.text_input("Enter name")
+tab1, tab2 = st.tabs(["Expenses", "Summary"])
 
-if name == "":
-       st.warning("Enter valid name")
-else:
-       st.text(f"Your name is {name}")
+with tab1:
 
-# Enter costs
-monthly_take_home = int(st.number_input(
-       "What's your monthly take home income?",
-       value = 10,
-       min_value=0,
-       max_value=20
-       ))
+    st.text("Please complete the fields below, then click on the summary tab to view your results")
 
-housing_costs = int(st.number_input("What's your monthly housing cost (rent/mortgage)?", value = 5))
+    user_name= st.text_input("Please enter your full name")
 
-food_costs = int(st.number_input("How much do you spend on food per month?", value = 1))
+    if user_name == "":
+        st.error("You havent entered your name", icon = "❌")
 
-utility_costs = int(st.number_input("How much do you spend on utilities per month?", value = 1))
+    salary= st.number_input("Please enter your monthly take home salary",
+                            value= 500
+                            , min_value = 1
+                            , max_value = 100000)
 
-st.text(f"Your take home salary is {monthly_take_home}")
-st.text(f"Your housing costs are {housing_costs}")
-st.text(f"Your food costs are {food_costs}")
-st.text(f"Your utility costs are {utility_costs}")
+    if salary == "":
+        st.error("You havent entered your salary", icon = "❌")
+    else:
+        st.success(f"Your monthly take home salary is £{salary:.2f}")
 
-# Calculations
+    housing_cost = st.number_input("What's your monthly housing cost (rent/mortgage)?")
 
-housing_perc = housing_costs / monthly_take_home
+    if housing_cost == "":
+        st.error("You havent entered your monthly housing cost", icon = "❌")
+    else:
+        st.success(f"Your monthly housing cost is £{housing_cost:.2f}")
 
-st.text(f"Percentage of take home spent on housing are {housing_perc*100:.2f}%")
+    food_cost = st.number_input("How much do you spend on food per month?")
 
-remaining = monthly_take_home - housing_costs - food_costs - utility_costs
+    if food_cost == "":
+        st.error("You havent entered your food cost", icon = "❌")
+    else:
+        st.success(f"Your monthly food cost is £{food_cost:.2f}")
 
-st.text(f"Your monthly amount after housing, food and utility costs is £{remaining}.")
+    utility_cost = st.number_input("How much do you spend on utilities per month?")
 
-if housing_perc > 0.5:
-       st.error("Housing exceeds 50%")
-elif housing_perc > 0.33:
-       st.warning("Housing exceeds 33%")
-else:
-       st.success("Housing <= 33%")
+    if utility_cost == "":
+        st.error("You havent entered your monthly utility cost", icon = "❌")
+    else:
+        st.success(f"Your monthly utiliyy cost is £{utility_cost:.2f}")
 
-if monthly_take_home > 10:
-       st.success("Spend!")
 
-st.image("denise.png")
+with tab2:
+    st.text(f"Hello {user_name}")
+
+    # Calculate the percentage of take home that housing costs represent
+    housing_perc = housing_cost/salary
+
+    st.text(f"The percentage of your take home salary spent on housing is {housing_perc*100:.2f}%")
+
+    if housing_cost > 0.5:
+        st.warning("Housing costs exceed 50%", icon ="⚠️")
+    elif housing_perc > 0.33:
+        st.warning("Housing costs exceed 50%", icon ="⚠️")
+    else:
+        st.success("Housing costs are less than 33%", icon = "✅")
+
+    # Calculate remaining money after housing, food and utility costs
+    remaining = salary - housing_cost - food_cost - utility_cost
+
+    st.text(f"Your monthly salary left over after housing, food and utility costs is £{remaining}")
+
+    if remaining > 10:
+       st.success("Treat yourself!",icon="💰")
+
+    st.image("denise.png")
