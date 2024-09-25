@@ -28,6 +28,15 @@ In this session, students will create three web applications:
 - a wordcloud generator
 - a dashboard
 
+## Slides
+
+<a href="https://docs.google.com/presentation/d/1F3Fnn8OF-m02NClaHICvM5LDWrkV20np-bhnBfpKOvA/edit?usp=sharing"><img src="https://img.shields.io/static/v1?label=Google+Slides&message=Click+here+to+view+the+slides+for+this+session&color=%23FBBC04&style=for-the-badge&logo=googleslides&logoColor=%23FBBC04" alt="Google Slides - Click here to view slides for this session"></a>
+
+## Book
+
+<a href="https://bergam0t.github.io/streamlit_book/"><img src="https://img.shields.io/static/v1?label=Book&message=Click+here+to+view+the+relevant+HSMA+book&color=%23782828&style=for-the-badge&logo=mdbook" alt="Book - Click here to view the relevant HSMA book"></a>
+
+
 ## Dataset Sources
 
 ### Exercise 3
